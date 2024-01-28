@@ -1,0 +1,22 @@
+% Parameters That we were set with in the question
+a = -1;
+b = 1;
+dt = 0.01; %In order to compare the cases with the different levels on time-step simply change the number
+T = 20; %End Integral
+
+% Start the timer
+tic;
+
+% Solve the ODEs
+ [t, x, y] = forwardEuler(a, b, dt, T); % Change this to secondOrderRungeKutta and fourthOrderRungeKutta for the other methods
+% [t, x, y] = secondOrderRungeKutta(a, b, dt, T);
+ % [t, x, y] = fourthOrderRungeKutta(a, b, dt, T);
+% Plot the x-y cross-section of the trajectory
+plot(x, y , 'b');
+xlabel('x');
+ylabel('y');
+title('x-y cross-section of the trajectory');
+
+% Stop the timer and display the elapsed time
+elapsedTime = toc;
+fprintf('Time elapsed: %f seconds\n', elapsedTime);
