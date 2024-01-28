@@ -1,0 +1,22 @@
+
+%The Runge-Kutta is only digestable if I use functions,
+%it was a no-brainer
+function [t, x, y] = secondOrderRungeKutta(a, b, dt, T)
+    t = 0:dt:T;
+    x = zeros(size(t));
+    y = zeros(size(t));
+    x(1) = 1;
+    y(1) = 1;
+    %Similar to the forward Euler I set up my vectors and ICs
+    %Actual RK Method , it was no particularly hard but very LONG
+    for i = 1:(length(t)-1)
+        k1_x = dt*(-y(i) + a*x(i)*(x(i)^2 + y(i)^2) + b*(x(i)^2 + y(i)^2));
+        k1_y = dt*(x(i) + a*y(i)*(x(i)^2 + y(i)^2));
+
+        k2_x = (-(y(i)+0.5*k1_y) + a*(x(i)+0.5*k1_x)*((x(i)+0.5*k1_x)^2 + (y(i)+0.5*k1_y)^2) + b*((x(i)+0.5*k1_x)^2 + (y(i)+0.5*k1_y)^2));
+        k2_y = ((x(i)+0.5*k1_x) + a*(y(i)+0.5*k1_y)*((x(i)+0.5*k1_x)^2 + (y(i)+0.5*k1_y)^2));
+
+        x(i+1) = x(i) + dt*k2_x;
+        y(i+1) = y(i) + dt*k2_y;
+    end
+end
