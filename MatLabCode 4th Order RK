@@ -1,0 +1,24 @@
+function [t, x, y] = fourthOrderRungeKutta(a, b, dt, T)
+    t = 0:dt:T;
+    x = zeros(size(t));
+    y = zeros(size(t));
+    x(1) = 1;
+    y(1) = 1;
+
+    for i = 1:(length(t)-1)
+        k1_x = (-y(i) + a*x(i)*(x(i)^2 + y(i)^2) + b*(x(i)^2 + y(i)^2));
+        k1_y = (x(i) + a*y(i)*(x(i)^2 + y(i)^2));
+
+        k2_x = (-(y(i)+0.5*dt*k1_y) + a*(x(i)+0.5*dt*k1_x)*((x(i)+0.5*dt*k1_x)^2 + (y(i)+0.5*dt*k1_y)^2) + b*((x(i)+0.5*dt*k1_x)^2 + (y(i)+0.5*dt*k1_y)^2));
+        k2_y = ((x(i)+0.5*dt*k1_x) + a*(y(i)+0.5*dt*k1_y)*((x(i)+0.5*dt*k1_x)^2 + (y(i)+0.5*dt*k1_y)^2));
+
+        k3_x = (-(y(i)+0.5*dt*k2_y) + a*(x(i)+0.5*dt*k2_x)*((x(i)+0.5*dt*k2_x)^2 + (y(i)+0.5*dt*k2_y)^2) + b*((x(i)+0.5*dt*k2_x)^2 + (y(i)+0.5*dt*k2_y)^2));
+        k3_y = ((x(i)+0.5*dt*k2_x) + a*(y(i)+0.5*dt*k2_y)*((x(i)+0.5*dt*k2_x)^2 + (y(i)+0.5*dt*k2_y)^2));
+
+        k4_x = (-(y(i)+dt*k3_y) + a*(x(i)+dt*k3_x)*((x(i)+dt*k3_x)^2 + (y(i)+dt*k3_y)^2) + b*((x(i)+dt*k3_x)^2 + (y(i)+dt*k3_y)^2));
+        k4_y = ((x(i)+dt*k3_x) + a*(y(i)+dt*k3_y)*((x(i)+dt*k3_x)^2 + (y(i)+dt*k3_y)^2));
+
+        x(i+1) = x(i) + dt*(k1_x + 2*k2_x + 2*k3_x + k4_x)/6;
+        y(i+1) = y(i) + dt*(k1_y + 2*k2_y + 2*k3_y + k4_y)/6;
+    end
+end
