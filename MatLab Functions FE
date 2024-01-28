@@ -1,0 +1,20 @@
+
+%I orginally did the forward Euler Manually but rewatching the lecture
+%notes, it said I should include as many functions as possible so I made it
+%a function,
+function [t, x, y] = forwardEuler(a, b, dt, T)
+%Setting up the variables that I will need to preform the forward euler
+    t = 0:dt:T;
+
+    %Initalsing the column vectors that my values will be in
+    x = zeros(size(t));
+    y = zeros(size(t));
+    %Initialising the intial conditions
+    x(1) = 1;
+    y(1) = 1;
+    %Actual Forward Euler Scheme
+    for i = 1:(length(t)-1)
+        x(i+1) = x(i) + dt*(-y(i) + a*x(i)*(x(i)^2 + y(i)^2) + b*(x(i)^2 + y(i)^2));
+        y(i+1) = y(i) + dt*(x(i) + a*y(i)*(x(i)^2 + y(i)^2));
+    end
+end
